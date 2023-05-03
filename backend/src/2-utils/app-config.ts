@@ -2,8 +2,8 @@ class AppConfig{
     public host = "localhost"
     public user = "root"
     public password = ""
-    public database = "theters & muvies"
-    public port = "3001"
+    public database = "theatersendmuvies"
+    public port = 3001
 }
 
 const appConfig = new AppConfig

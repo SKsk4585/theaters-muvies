@@ -1,9 +1,11 @@
 class TheatersModel{
-    public theaterId:number
-    public theaterName:string
+    public theatersId:number
+    public theatersName:string
 
     public constructor(theater: TheatersModel){
-        this.theaterId = theater.theaterId
-        this.theaterId = theater.theaterId
+        this.theatersId = theater.theatersId
+        this.theatersName = theater.theatersName
     }
 }
+
+export default TheatersModel
