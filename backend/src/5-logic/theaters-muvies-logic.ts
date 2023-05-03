@@ -2,6 +2,7 @@ import { OkPacket } from "mysql";
 import dal from "../2-utils/dal";
 import MuviesModel from "../4-models/muvies-model";
 import TheatersModel from "../4-models/theaters-model";
+import { ResouceNotFoundErrorModel } from "../4-models/error-model";
 
 
 
@@ -19,8 +20,8 @@ async function getAllMuviesByTheaters(theatersId:number):Promise<MuviesModel[]>{
                 WHERE M.theatersId = ${theatersId}`
     const muvies = await dal.execute(sql)
     return muvies
-
 }
+
 async function addMuvies(muvie:MuviesModel):Promise<MuviesModel>{
     const sql = `INSERT INTO muvies 
     VALUES (DEFAULT,
@@ -32,7 +33,15 @@ async function addMuvies(muvie:MuviesModel):Promise<MuviesModel>{
     const info:OkPacket = await dal.execute(sql)
     muvie.muvieId = info.insertId
     return muvie
+}
 
+async function deleteMuvie(id:number):Promise<void>{
+    const sql = `DELETE FROM muvies
+                 WHERE muvieId = ${id}`
+
+    const info:OkPacket = await dal.execute(sql)
+    if (info.affectedRows === 0) throw new ResouceNotFoundErrorModel(id)
+    
 }
     
 
@@ -40,5 +49,6 @@ async function addMuvies(muvie:MuviesModel):Promise<MuviesModel>{
 export default{
     getAllTheaters,
     getAllMuviesByTheaters,
-    addMuvies
+    addMuvies,
+    deleteMuvie
 }

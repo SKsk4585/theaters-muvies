@@ -44,4 +44,17 @@ router.post("/muvies",async(request:Request, response:Response, next: NextFuncti
     }
 })
 
+//delete muvie
+router.delete("/muvies/:muvieId",async(request:Request, response:Response, next: NextFunction)=>{
+    try {
+        const muvieId = +request.params.muvieId
+         await theatersMuviesLogic.deleteMuvie(muvieId)
+        response.sendStatus(204)
+        
+    } 
+    catch (error) {
+        next(error)        
+    }
+})
+
 export default router
