@@ -1,5 +1,6 @@
 import  express, { NextFunction, Request, Response } from "express"
 import theatersMuviesLogic from "../5-logic/theaters-muvies-logic"
+import MuviesModel from "../4-models/muvies-model"
 
 
 
@@ -26,8 +27,20 @@ router.get("/muvies/:theatersId",async(request:Request, response:Response, next:
         
     } 
     catch (error) {
-        next(error)
+        next(error)        
+    }
+})
+
+//add muvie
+router.post("/muvies",async(request:Request, response:Response, next: NextFunction)=>{
+    try {
+        const muvie = new MuviesModel(request.body) 
+        const added =  await theatersMuviesLogic.addMuvies(muvie)
+        response.status(201).json(added)
         
+    } 
+    catch (error) {
+        next(error)        
     }
 })
 

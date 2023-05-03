@@ -1,3 +1,4 @@
+import { OkPacket } from "mysql";
 import dal from "../2-utils/dal";
 import MuviesModel from "../4-models/muvies-model";
 import TheatersModel from "../4-models/theaters-model";
@@ -20,10 +21,24 @@ async function getAllMuviesByTheaters(theatersId:number):Promise<MuviesModel[]>{
     return muvies
 
 }
+async function addMuvies(muvie:MuviesModel):Promise<MuviesModel>{
+    const sql = `INSERT INTO muvies 
+    VALUES (DEFAULT,
+            ${muvie.theatersId},
+            '${muvie.muvieName}',
+            '${muvie.dateTime}',
+            '${muvie.duration}'
+            )`
+    const info:OkPacket = await dal.execute(sql)
+    muvie.muvieId = info.insertId
+    return muvie
+
+}
     
 
 
 export default{
     getAllTheaters,
-    getAllMuviesByTheaters
+    getAllMuviesByTheaters,
+    addMuvies
 }
